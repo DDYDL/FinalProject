@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ARoom</title>
+
+    <!-- Add some CSS to change client UI -->
+    <style>
+    body {
+        background-color: #232F3E;
+        }
+    label, button {
+        color: #FF9900;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 40px;
+        }
+     input {
+        color: #232F3E;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 20px;
+        }
+    </style>
+    <script>
+	var callAPI = (X, Y, Z)=>{
+            var myHeaders = new Headers();
+            myHeaders.append("coodi", "application/json");
+            var raw = JSON.stringify({"coordi":[{"X":X,"Y":Y,"Z":Z}]});
+	    var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+	    fetch("https://wv3fc628yg.execute-api.ap-northeast-2.amazonaws.com/aroom", requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+	}
+    </script>
+</head>
+
+<body>
+    <form>
+	<label>Coordinate</label>
+        <button type="button" onclick="callAPI(1, 2, 3)">Call API</button>
+	<p id="print"></p>
+    </form>
+</body>
+</html>
