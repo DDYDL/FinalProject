@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 using System;
 public class Distance : MonoBehaviour
 {
-    /// °ø°£¿¡¼­ ±íÀÌ °Å¸®¸¦ ÀÎ½ÄÇÏ°í °Å¸®¸¦ ÁÂÇ¥·Î ¹Ù²Û´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï°ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ù²Û´ï¿½.
     //XRCpuImage cpuImage;
     //AROcclusionManager om = new AROcclusionManager();
     public Camera camera;
@@ -51,57 +51,57 @@ public class Distance : MonoBehaviour
                     Assert.IsTrue(cpuImage.planeCount == 1);
                     var plane = cpuImage.GetPlane(0);
                     var dataLength = plane.data.Length;
-                    //Debug.Log("datalength = " + dataLength); //28800, µ¥ÀÌÅÍ ÀüÃ¼ ±æÀÌ, ÀÌ¹ÌÁö »çÀÌÁî 160 X 90
-                    var pixelStride = plane.pixelStride; //ÇÈ¼¿ º¸Æø
-                    var rowStride = plane.rowStride; // Çà º¸Æø
+                    //Debug.Log("datalength = " + dataLength); //28800, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½, ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 160 X 90
+                    var pixelStride = plane.pixelStride; //ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    var rowStride = plane.rowStride; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     //Debug.Log("pixelStride = " + pixelStride); // 2
                     //Debug.Log("rowStride = " + rowStride); // 320
                     Assert.AreEqual(0, dataLength % rowStride, "dataLength should be divisible by rowStride without a remainder");
                     Assert.AreEqual(0, rowStride % pixelStride, "rowStride should be divisible by pixelStride without a remainder");
-                    var centerRowIndex = dataLength / rowStride / 2; // dataLength / rowStride, µ¥ÀÌÅÍ ÀüÃ¼ ±æÀÌ ³ª´©±â Çà º¸Æø(°¡·Î ±æÀÌ)Àº ¼¼·Î ±æÀÌ°¡ ³ª¿È
-                    var centerPixelIndex = rowStride / pixelStride / 2; // rowStride / pixelStride, °¡·Î ±æÀÌ°¡ ³ª¿È
+                    var centerRowIndex = dataLength / rowStride / 2; // dataLength / rowStride, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    var centerPixelIndex = rowStride / pixelStride / 2; // rowStride / pixelStride, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½
                     var centerPixelData = plane.data.GetSubArray(centerRowIndex * rowStride + centerPixelIndex * pixelStride, pixelStride);
                     var depthInMeters = convertPixelDataToDistanceInMeters(centerPixelData.ToArray(), cpuImage.format);
-                    //Debug.Log("centerRowIndex = " + centerRowIndex); //45, ¼¼·Î Àý¹Ý
-                    //Debug.Log("centerPixelIndex = " + centerPixelIndex); //80, °¡·Î Àý¹Ý?
+                    //Debug.Log("centerRowIndex = " + centerRowIndex); //45, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    //Debug.Log("centerPixelIndex = " + centerPixelIndex); //80, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½?
                     //Debug.Log("centerPixelData = " + centerPixelData);
-                    var pixelData = plane.data.GetSubArray(23 * rowStride + 40 * pixelStride, pixelStride); // ¿ÞÂÊ »ó´Ü ÇÈ¼¿ °¡Á®¿À±â
+                    var pixelData = plane.data.GetSubArray(23 * rowStride + 40 * pixelStride, pixelStride); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     var depthInMeter = convertPixelDataToDistanceInMeters(pixelData.ToArray(), cpuImage.format);
-                    var pixelData2 = plane.data.GetSubArray(68 * rowStride + 120 * pixelStride, pixelStride); // ¿À¸¥ÂÊ ÇÏ´Ü ÇÈ¼¿ °¡Á®¿À±â
+                    var pixelData2 = plane.data.GetSubArray(68 * rowStride + 120 * pixelStride, pixelStride); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     var depthInMeter2 = convertPixelDataToDistanceInMeters(pixelData2.ToArray(), cpuImage.format);
                     print($"depth texture size: ({cpuImage.width},{cpuImage.height}), pixelStride: {pixelStride}, rowStride: {rowStride}, pixel pos: ({centerPixelIndex}, {centerRowIndex}), depthInMeters of the center pixel: {depthInMeters}");
                     //print($"depthInMeters of the left pixel: {depthInMeter}");
                     //print($"depthInMeters of the right pixel: {depthInMeter2}");
-                    /// ½ÃÀÛÇÑ °÷À» ±âÁØÀ¸·Î (0, 0, 0)ÀÌ µÊ.
-                    /// ÃÊÁ¡ ÀâÀ» ¶§ °Å¸® ¾û¸ÁµÊ, °°Àº º®ÀÌ¶óµµ ¾îµÎ¿î °÷ÀÌ¶û ¹àÀº °÷ ±íÀÌ°¡ ´Ù¸§
+                    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (0, 0, 0)ï¿½ï¿½ ï¿½ï¿½.
+                    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½Ù¸ï¿½
                     Vector3 direction = camera.transform.forward;
-                    Vector3 coordi = camera.transform.position + direction.normalized * depthInMeters; // ·ÎÄÃ ÁÂÇ¥°è ÁÂÇ¥
-                    print($"Áß¾Ó °Å¸® ·ÎÄÃ : {coordi}");
-                    //Vector3 coordi_w = transform.TransformDirection(coordi * Time.deltaTime); // ¿ùµå ÁÂÇ¥°è ÁÂÇ¥
-                    //print($"Áß¾Ó °Å¸® ¿ùµå : {coordi_w}"); // ½Ã°¢È­½Ã Àß ¾È ³ª¿È
+                    Vector3 coordi = camera.transform.position + direction.normalized * depthInMeters; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½Ç¥
+                    print($"ï¿½ß¾ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ : {coordi}");
+                    //Vector3 coordi_w = transform.TransformDirection(coordi * Time.deltaTime); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½Ç¥
+                    //print($"ï¿½ß¾ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ : {coordi_w}"); // ï¿½Ã°ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     Vector3 move = new Vector3(1, 1, 0);
                     Transform direction22 = camera.transform;
                     direction22.Translate(move);
                     direction22.Rotate(45, 45, 0);
-                    Vector3 direction1 = direction22.transform.forward; // ¿À¸¥ÂÊ »ó´ÜÀ¸·Î ³ª°¡´Â ¹æÇâ
+                    Vector3 direction1 = direction22.transform.forward; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     Vector3 coordi1 = camera.transform.position + direction.normalized * depthInMeter;
-                    print($"¿ÞÂÊ »ó´Ü °Å¸® : {coordi1}");
-                    Instantiate(sphere, coordi, camera.transform.rotation); // Áß¾Ó ÁÂÇ¥ ½Ã°¢È­
-                    Instantiate(sphere1, coordi1, camera.transform.rotation); // ¿ÞÂÊ »ó´Ü ÁÂÇ¥ ½Ã°¢È­
-                    string coordis = coordi.x.ToString() + "," + (-coordi1.y).ToString() + "," + coordi.z.ToString(); // ¹Ù´Ú¿¡ ºÙÀÌ±â À§ÇØ y=0 ¼³Á¤-±×·¡µµ À§¿¡ »ý¼ºµÊ 0ÀÌ °¡¿îµ¥ ÁÂÇ¥¶ó¼­
-                    /// Æò±Õ ÃµÀå°í ³ôÀÌ°¡ 2.3m Á¤µµ·Î ¿¹»óÇÏ¿© ±× Àý¹ÝÀ¸·Î ÁÂÇ¥ÀÇ y°ªÀ» -1.1mÀ¸·Î ¼³Á¤ÇÑ´Ù. ARSessionÀÇ y°ªÀº 0À¸·Î ÁöÁ¤ ///¶Ç´Â ¿ÞÂÊ »ó´Ü ÁÂÇ¥ÀÇ y°ª¿¡ -¸¦ ºÙ¿© ³ÖÀ½
+                    print($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ : {coordi1}");
+                    Instantiate(sphere, coordi, camera.transform.rotation); // ï¿½ß¾ï¿½ ï¿½ï¿½Ç¥ ï¿½Ã°ï¿½È­
+                    Instantiate(sphere1, coordi1, camera.transform.rotation); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½Ã°ï¿½È­
+                    string coordis = coordi.x.ToString() + "," + (-coordi1.y).ToString() + "," + coordi.z.ToString(); // ï¿½Ù´Ú¿ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ y=0 ï¿½ï¿½ï¿½ï¿½-ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½îµ¥ ï¿½ï¿½Ç¥ï¿½ï¿½
+                    /// ï¿½ï¿½ï¿½ Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ 2.3m ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ yï¿½ï¿½ï¿½ï¿½ -1.1mï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ARSessionï¿½ï¿½ yï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ///ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ yï¿½ï¿½ï¿½ï¿½ -ï¿½ï¿½ ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                     Debug.Log(coordis);
-                    Coordi coo = new Coordi { memberCode = Initialization.memberCode.ToString(), placeCode = Initialization.placeCode.ToString(), coordi = coordis.ToString() }; // »ý¼ºÇÑ Áß¾Ó ÁÂÇ¥ °´Ã¼·Î ÀúÀå
-                    coordi_arr.coordi.Add(coo); // ¸®½ºÆ®¿¡ ÁÂÇ¥ °´Ã¼ ÀúÀå
-                    //timer += Time.deltaTime; // Å¸ÀÌ¸Ó·Î ÀÏÁ¤ ½Ã°£¸¶´Ù ÃøÁ¤ÇÏ°Ô ÇÏ·Á ÇßÀ¸³ª ½ÇÆÐ
+                    Coordi coo = new Coordi { memberCode = Initialization.memberCode.ToString(), placeCode = Initialization.placeCode.ToString(), coordi = coordis.ToString() }; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¾ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+                    coordi_arr.coordi.Add(coo); // ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+                    //timer += Time.deltaTime; // Å¸ï¿½Ì¸Ó·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     //if (timer > waitingTime)
                     //{
                     //Instantiate(sphere, coordi, camera.transform.rotation);
                     //timer = 0;
                     //}
-                    if (coordi_arr.coordi.Count == 300) // ÁÂÇ¥ ÃøÁ¤ Á¾·á Á¶°Ç, ÃßÈÄ ¹öÆ° Å¬¸¯µÇ¸é µÇ´Â °ÍÀ¸·Î ÇÒ ¿¹Á¤
+                    if (coordi_arr.coordi.Count == 300) // ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     {
-                        finish = true; // Á¾·áµÊ
+                        finish = true; // ï¿½ï¿½ï¿½ï¿½ï¿½
                         StopCoroutine(StartCoordi());
                     }
                 }
@@ -121,7 +121,7 @@ public class Distance : MonoBehaviour
         {
             case XRCpuImage.Format.DepthUint16:
                 return BitConverter.ToUInt16(data, 0) / 1000f;
-            //return BitConverter.ToUInt16(data, 0) / 10f; //cm´ÜÀ§
+            //return BitConverter.ToUInt16(data, 0) / 10f; //cmï¿½ï¿½ï¿½ï¿½
             case XRCpuImage.Format.DepthFloat32:
                 return BitConverter.ToSingle(data, 0);
             default:
