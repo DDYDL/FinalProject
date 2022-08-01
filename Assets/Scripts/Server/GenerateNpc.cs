@@ -48,12 +48,14 @@ public class GenerateNpc : MonoBehaviour
     // 튜토 에서만 사용
     public void SetOnlyNpc()
     {
+        transform.position = Spaces.spaces[CurrentState.currentPlaceCode].Currentlocation;
         setSpaces(0);
         Instantiate(modelCodes1, new Vector3(xc, yCoordi[0], zc), arCamera.transform.rotation); //npc 생성
     }
 
     public void SetObejct()
     {
+        transform.position = Spaces.spaces[CurrentState.currentPlaceCode].Currentlocation;
         setSpaces(1);
         Instantiate(modelCodes2, new Vector3(xc, yCoordi[1], zc), arCamera.transform.rotation); //먼저 포션 아이템만 배치
     }

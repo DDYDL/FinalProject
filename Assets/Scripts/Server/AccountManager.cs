@@ -10,41 +10,42 @@ using System;
 
 public class AccountManager : MonoBehaviour
 {
-	/// Distance¿¡¼­ ¹ÞÀº ÁÂÇ¥¸¦ ¼­¹ö·Î º¸³½´Ù.
+    /// Distanceï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 
-	[SerializeField] string url; // ¼­¹öÀÇ ¿£µåÆ÷ÀÎÆ®·Î ¼öÁ¤
-	string json;
-	int i = 0;
+    [SerializeField] string url; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    string json;
+    int i = 0;
 
-	public void InputClick() => StartCoroutine(AccountCo(json)); // ¹öÆ° ´©¸£¸é ÄÚ·çÆ¾ ½ÃÀÛ
+    public void InputClick() => StartCoroutine(AccountCo(json)); // ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
 
-	void Update() // °è¼Ó finish º¯¼ö¸¦ Ã¼Å©ÇÏ°í ÀÖ¾î¾ß ÇÏ¹Ç·Î update ÇÔ¼ö »ç¿ë
-	{
-		if (Distance.finish == true && i == 0)
-		{
-			json = RandomCoordi.RanCoordi(); // Distance¿¡¼­ ÁÂÇ¥ ÃøÁ¤ÀÌ Á¾·áµÇ¾î¾ß¸¸ ÇÔ¼ö È£Ãâ
-			i++; //ÇÑ ¹ø¸¸ ½ÇÇàµÇ±â À§ÇÑ º¯¼ö
+    void Update() // ï¿½ï¿½ï¿½ finish ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ï°ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Ï¹Ç·ï¿½ update ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½
+    {
+        if (Distance.finish == true && i == 0)
+        {
+            //Spaces.spaces.Add(Distance.space);
+
+            json = RandomCoordi.RanCoordi(); // Distanceï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ß¸ï¿½ ï¿½Ô¼ï¿½ È£ï¿½ï¿½
+            i++; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             Distance.coordi_arr.coordi = null;
             Distance.finish = false;
-			Initialization.placeCode += 1;
-		}
-	}
+        }
+    }
 
-	IEnumerator AccountCo(string json)
-	{
-		using (UnityWebRequest request = UnityWebRequest.Post(url, json))
-		{
-			byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-			request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-			request.downloadHandler = new DownloadHandlerBuffer();
-			request.SetRequestHeader("coordi", "application/json");
+    IEnumerator AccountCo(string json)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Post(url, json))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("coordi", "application/json");
 
-			yield return request.SendWebRequest();
+            yield return request.SendWebRequest();
 
-			Debug.Log(request.downloadHandler.text);
-			i=0;
-		}
-		StopCoroutine(AccountCo(json));
-	}
+            Debug.Log(request.downloadHandler.text);
+            i = 0;
+        }
+        StopCoroutine(AccountCo(json));
+    }
 }

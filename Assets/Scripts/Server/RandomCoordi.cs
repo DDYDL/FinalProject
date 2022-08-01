@@ -19,31 +19,21 @@ public class Coordis
 
 public class RandomCoordi : MonoBehaviour
 {
-    /// AccountManager¿¡¼­ È£ÃâµÇ¸é ÁÂÇ¥¸¦ ·£´ýÀ¸·Î ¼±º°ÇÏ¿© ´Ù½Ã returnÇÑ´Ù.
+    /// AccountManagerï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ù½ï¿½ returnï¿½Ñ´ï¿½.
 
     public static string RanCoordi()
     {
-        /*
-        Coordis coordi_arr = new Coordis();
 
-        for (int i = 0; i < 30; i++) // Test¿ë ÁÂÇ¥ 30°³ »ý¼º
-        {
-            Coordi coordi = new Coordi { X = i.ToString(), Y = i.ToString(), Z = i.ToString()};
-
-            coordi_arr.coordi.Add(coordi);
-        }
-        */
-
-        Coordis coordi_arr = Distance.coordi_arr; // Distance Å¬·¡½º¿¡¼­ »ý¼ºÇÑ ÁÂÇ¥ °¡Á®¿À±â
+        Coordis coordi_arr = Distance.coordi_arr; // Distance Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Coordis coordi_arr2 = new Coordis();
 
-        for (int i = 0; i < 3; i++) // ·£´ýÀ¸·Î »ÌÀº index 10°³ »ý¼º
+        for (int i = 0; i < 3; i++)
         {
             int j;
             j = UnityEngine.Random.Range(0, coordi_arr.coordi.Count);
-            coordi_arr2.coordi.Add(coordi_arr.coordi[j]); // »õ·Î¿î ¸®½ºÆ®¿¡ ·£´ýÀ¸·Î »ÌÀº ¹®ÀÚ¿­ ¹è¿­ ÀúÀå
+            coordi_arr2.coordi.Add(coordi_arr.coordi[j]); // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½è¿­ ï¿½ï¿½ï¿½ï¿½
         }
-        
+
         string json = JsonUtility.ToJson(coordi_arr2);
         Debug.Log("json: " + json);
 

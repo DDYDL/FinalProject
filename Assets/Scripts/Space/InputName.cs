@@ -31,6 +31,5 @@ public class InputName : MonoBehaviour
     {
         spaceName = spaceNameInput.text;
         PlayerPrefs.SetString("CurrentSpaceName", spaceName);
-        
     }
 }

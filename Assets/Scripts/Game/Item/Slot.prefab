@@ -224,10 +224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806a696310b066849bdef9072dcd1fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theItemDatabase: {fileID: 0}
   item: {fileID: 0}
   itemCount: 0
   itemImage: {fileID: 119067240244240733}
+  click2: {fileID: 0}
   text_Count: {fileID: 7509126716092758203}
   go_CountImage: {fileID: 3221542902055732388}
 --- !u!1 &3221542902055732388

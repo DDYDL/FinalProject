@@ -13,9 +13,9 @@ public class Command
 
 public class ArrangeManager : MonoBehaviour
 {
-    /// ¼­¹ö·ÎºÎÅÍ µ¥ÀÌÅÍ(ÁÂÇ¥ + object ¹øÈ£)¸¦ ¹Þ¾Æ¿Â´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ç¥ + object ï¿½ï¿½È£)ï¿½ï¿½ ï¿½Þ¾Æ¿Â´ï¿½.
 
-    [SerializeField] string url; // ¼­¹öÀÇ ¿£µåÆ÷ÀÎÆ®
+    [SerializeField] string url; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     string json;
 
     public static string st;
@@ -25,7 +25,7 @@ public class ArrangeManager : MonoBehaviour
     {
         Command cd = new Command();
         cd.command = "info";
-        cd.code = Initialization.memberCode.ToString() + "&" + Initialization.placeCode; // MemberCode & PlaceCode
+        cd.code = Spaces.spaces[0].memberCode.ToString() + "&" + CurrentState.currentPlaceCode; // MemberCode & PlaceCode
         Debug.Log("code = " + cd.code);
         json = JsonUtility.ToJson(cd);
     }
@@ -33,7 +33,7 @@ public class ArrangeManager : MonoBehaviour
     {
         using (UnityWebRequest request = UnityWebRequest.Post(url, json))
         {
-            //Debug.Log("json_back: " + json); //¾È ³ª¿À´Â ¹®Á¦ ÇØ°á
+            //Debug.Log("json_back: " + json); //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -44,8 +44,8 @@ public class ArrangeManager : MonoBehaviour
             st = request.downloadHandler.text;
 
             Debug.Log(request.downloadHandler.text);
-            // {"body": [["1,2,3",2],["4,5,6",1]]} Çü½ÄÀ¸·Î ¹ÝÈ¯µÊ
-            // ["1, 2, 3"ÀÌ ÁÂÇ¥, 2°¡ ±×¿¡ ÇØ´çÇÏ´Â ¿ÀºêÁ§Æ® ¹øÈ£]
+            // {"body": [["1,2,3",2],["4,5,6",1]]} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½
+            // ["1, 2, 3"ï¿½ï¿½ ï¿½ï¿½Ç¥, 2ï¿½ï¿½ ï¿½×¿ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È£]
         }
         StopCoroutine(BackCo(json));
     }

@@ -24,7 +24,7 @@ public class SpaceSlot : MonoBehaviour
 
     }
 
-    public void AddSpace(SpaceItem _space) 
+    public void AddSpace(SpaceItem _space)
     {
         space = _space;
         itemImage.sprite = space.spaceImage;
@@ -35,17 +35,17 @@ public class SpaceSlot : MonoBehaviour
         spaceNameText.text = PlayerPrefs.GetString("CurrentSpaceName");
         Debug.Log("현재 슬롯" + transform.name);
 
+        Spaces.spaces[CurrentState.currentPlaceCode].spaceName = spaceNameText.text;
+
+        //Debug.Log("Space = " + Spaces.spaces[CurrentState.currentPlaceCode].spaceName); // 이름 잘 들어감
+        //Debug.Log("Space = " + Spaces.spaces[0].spaceName); //이전 이름도 잘 들어가 있음
+        //Debug.Log("SpaceLength = " + State.spaces.Length); //항상6
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetSpace(int i)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        itemImage.sprite = space.spaceImage;
+        SetColor(1);
+        spaceNameText.text = Slots.slots[i].spaceNameText.text;
     }
 }

@@ -12,10 +12,10 @@ public class SpaceSelete : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
-    
+
     void Update()
     {
         buttonName = EventSystem.current.currentSelectedGameObject.name;
@@ -26,21 +26,21 @@ public class SpaceSelete : MonoBehaviour
         Debug.Log("buttonName = " + buttonName); //SpaceSlot
         string index = buttonName.Substring(buttonName.Length - 2, 1);
         int x = int.Parse(index);
-        Debug.Log("placeNumber = " + x);
+        //Debug.Log("placeNumber = " + x);
 
-        switch(x)
+        switch (x)
         {
             case 1:
-                Initialization.placeCode = 1;
-                Debug.Log("placeCode = " + Initialization.placeCode);
+                CurrentState.currentPlaceCode = 0;
+                Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
                 break;
             case 2:
-                Initialization.placeCode = 2;
-                Debug.Log("placeCode = " + Initialization.placeCode);
+                CurrentState.currentPlaceCode = 1;
+                Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
                 break;
             case 3:
-                Initialization.placeCode = 3;
-                Debug.Log("placeCode = " + Initialization.placeCode);
+                CurrentState.currentPlaceCode = 2;
+                Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
                 break;
             default:
                 break;
