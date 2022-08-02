@@ -42,10 +42,12 @@ public class SpaceSlot : MonoBehaviour
         //Debug.Log("SpaceLength = " + State.spaces.Length); //항상6
     }
 
-    public void SetSpace(int i)
+    public void SetSpace(SpaceItem _space, int i)
     {
+        space = _space;
         itemImage.sprite = space.spaceImage;
         SetColor(1);
-        spaceNameText.text = Slots.slots[i].spaceNameText.text;
+        spaceNameText.text = Spaces.slots[i].spaceNameText.text;
+        Debug.Log("Set Space = " + spaceNameText.text);
     }
 }

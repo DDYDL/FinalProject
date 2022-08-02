@@ -23,13 +23,13 @@ public class SpaceController : MonoBehaviour
     {
         for (int i = 0; i < spaces.Length; i++)
         {
-            if (Slots.spaces_arr[i] == 0)
+            if (Spaces.spaces_arr[i] == 0)
             {
                 spaces[i].AddSpace(_space);
-                Slots.spaces_arr[i] = i + 1;
+                Spaces.spaces_arr[i] = i + 1;
                 SpaceSlot space = new SpaceSlot();
                 space = spaces[i];
-                Slots.slots.Add(space);
+                Spaces.slots.Add(space);
                 Debug.Log("i = " + i + " /spacei = " + space);
                 //Debug.Log("222//i = " + i + " /space.space = " + spaces[i].space);
                 //Debug.Log("222//i = " + i + " /spaceState = " + Slots.spaces_arr[i]);
@@ -59,7 +59,7 @@ public class SpaceController : MonoBehaviour
 
         for (int j = 0; j < Spaces.spaces.Count; j++)
         {
-            spaces[j].SetSpace(j);
+            spaces[j].SetSpace(spaceitem, j);
         }
         
     }
