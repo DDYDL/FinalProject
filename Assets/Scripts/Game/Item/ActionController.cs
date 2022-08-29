@@ -19,8 +19,6 @@ public class ActionController : MonoBehaviour
     [SerializeField]
     private Text actionText;
 
-    public Text noticeText;
-
     [SerializeField]
     private Inventory theInventory;     // Inventory.cs
 
@@ -30,7 +28,7 @@ public class ActionController : MonoBehaviour
         IsItemTrigger = true;
     }
 
-    public void TryAction() // Button을 누르면 실행이 가능하도록 한다.
+    public void TryAction() // GrabButton을 누르면 실행이 가능하도록 한다.
     {
         CanPickUp();
     }
@@ -62,15 +60,15 @@ public class ActionController : MonoBehaviour
         actionText.gameObject.SetActive(false);
     }
 
-    private void CanPickUp()
+    private void CanPickUp()    // 아이템을 찾고, Grab버튼을 누르면 실행되는 코드 , 
     {
         if (pickupActivated)
         {
             if (_item.transform != null)
             {
                 theInventory.AcquireItem(_item.transform.GetComponent<ItemPickUp>().item);
-                Destroy(_item.transform.gameObject);
-                ItemInfoDisappear();
+                Destroy(_item.transform.gameObject);    //아이템(3D오브젝트)가 사라지고
+                ItemInfoDisappear();    //아이템에 관한 설명이 사라진다.
                 IsItemTrigger = false;
             }
         }

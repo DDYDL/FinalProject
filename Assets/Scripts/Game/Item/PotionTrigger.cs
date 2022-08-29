@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PotionTrigger : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         ActionController.GetCollider(gameObject);
     }

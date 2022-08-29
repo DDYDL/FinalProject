@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class Slot : MonoBehaviour
 {
     private ItemDataBase theItemDatabase;
+    private TutorialController tutorialController;
     public Item item;
     public int itemCount;
     public Image itemImage;
-    public GameObject click2;
+    public bool IsTutorial = false;
     //public GameObject ghost;
 
     [SerializeField]
@@ -24,15 +25,14 @@ public class Slot : MonoBehaviour
         color.a = _alpha;
         itemImage.color = color;
 
-    }
+    } 
 
-
-
-    public void AddItem(Item _item, int _count = 1)
+    public void AddItem(Item _item, int _count = 1) //slot 창에 아이템을 넣는 함수
     {
+
         item = _item;
         itemCount = _count;
-        itemImage.sprite = item.itemImage;
+        itemImage.sprite = item.itemImage;  //아이템에 할당된 이미지를 slot칸에 넣어준다.
 
         if (item.itemType != Item.ItemType.Equipment)
         {
@@ -52,13 +52,13 @@ public class Slot : MonoBehaviour
 
     public void UsedItem()
     {
-        if(item.itemName == "HealthPotion")
-            click2.gameObject.SetActive(false);
+        if (item.itemName == "HealthPotion" && IsTutorial)
+            tutorialController.ActiveClick2(false);
 
         if (item != null)
         {
 
-            if (item.itemName == "Bomb") 
+            if (item.itemName == "Bomb")
             {
                 ghost.ghostNpc.ghostDead();
                 Destroy(ghost.npc);
@@ -70,7 +70,7 @@ public class Slot : MonoBehaviour
             }
 
             theItemDatabase.UseItem(item);
-            
+
 
             if (item.itemType == Item.ItemType.Used)
                 SetSlotCount(-1);
@@ -95,6 +95,11 @@ public class Slot : MonoBehaviour
 
         text_Count.text = "0";
         go_CountImage.SetActive(false);
+    }
+
+    void Start()
+    {
+        theItemDatabase = FindObjectOfType<ItemDataBase>();
     }
 
 }

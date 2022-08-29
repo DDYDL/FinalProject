@@ -9,6 +9,7 @@ public class Coordi
     [SerializeField] public string memberCode;
     [SerializeField] public string placeCode;
     [SerializeField] public string coordi;
+    [SerializeField] public string spaceName;
 }
 
 [Serializable]
@@ -31,6 +32,9 @@ public class RandomCoordi : MonoBehaviour
         {
             int j;
             j = UnityEngine.Random.Range(0, coordi_arr.coordi.Count);
+            //coordi_arr.coordi[j].spaceName = PlayerPrefs.GetString("CurrentSpaceName");
+            coordi_arr.coordi[j].spaceName = InputName.spaceName;
+            //Debug.Log("setName = " + coordi_arr.coordi[i].spaceName);
             coordi_arr2.coordi.Add(coordi_arr.coordi[j]); // ���ο� ����Ʈ�� �������� ���� ���ڿ� �迭 ����
         }
 

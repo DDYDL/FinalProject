@@ -17,6 +17,8 @@ public class SpaceController : MonoBehaviour
 
     public SpaceSlot[] spaces;
 
+    public static bool nameSign;
+
     //public InputName spacename;
 
     public void SpaceRegist(SpaceItem _space)
@@ -26,17 +28,22 @@ public class SpaceController : MonoBehaviour
             if (Spaces.spaces_arr[i] == 0)
             {
                 spaces[i].AddSpace(_space);
-                Spaces.spaces_arr[i] = i + 1;
+
+                SpaceController.nameSign = true; // 데이터베이스에 공간 정보 전송 시 공간 이름이 정해진 후 보내게 하기 위함
+                Debug.Log("Namesign = " + nameSign);
+
+                Spaces.spaces_arr[i] = i + 1; // 1부터 들어감
                 SpaceSlot space = new SpaceSlot();
                 space = spaces[i];
-                Spaces.slots.Add(space);
+                //Spaces.slots.Add(space);
                 Debug.Log("i = " + i + " /spacei = " + space);
                 //Debug.Log("222//i = " + i + " /space.space = " + spaces[i].space);
                 //Debug.Log("222//i = " + i + " /spaceState = " + Slots.spaces_arr[i]);
                 Debug.Log("스페이스 있음?" + spaces[i].space + " 현재 i 의 값은?" + i);
+
                 return;
             }
-            
+
         }
     }
 
@@ -46,7 +53,8 @@ public class SpaceController : MonoBehaviour
         {
             PlayPanel.SetActive(true);
             return;
-        }else
+        }
+        else
         {
             SceneManager.LoadScene("PlayScene");
             return;
@@ -61,13 +69,13 @@ public class SpaceController : MonoBehaviour
         {
             spaces[j].SetSpace(spaceitem, j);
         }
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (JySpaceData.IsRegi == true) 
+        if (JySpaceData.IsRegi == true)
         {
             SpaceRegist(spaceitem);
             JySpaceData.IsRegi = false;

@@ -9,6 +9,9 @@ public class SpaceSelete : MonoBehaviour
     public void InputClick() => SeleteSpace(buttonName);
     public void InputClick1() => SeleteSpace(buttonName);
     public void InputClick2() => SeleteSpace(buttonName);
+    public void InputClick3() => SeleteSpace(buttonName);
+    public void InputClick4() => SeleteSpace(buttonName);
+    public void InputClick5() => SeleteSpace(buttonName);
 
     void Start()
     {
@@ -40,6 +43,18 @@ public class SpaceSelete : MonoBehaviour
                 break;
             case 3:
                 CurrentState.currentPlaceCode = 2;
+                Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
+                break;
+            case 4:
+                CurrentState.currentPlaceCode = 3;
+                Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
+                break;
+            case 5:
+                CurrentState.currentPlaceCode = 4;
+                Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
+                break;
+            case 6:
+                CurrentState.currentPlaceCode = 5;
                 Debug.Log("placeCode = " + CurrentState.currentPlaceCode);
                 break;
             default:

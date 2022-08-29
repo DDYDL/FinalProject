@@ -12,6 +12,8 @@ public class noteController : MonoBehaviour
     public int page;
     public GameObject button;
 
+    
+
     public void EndTuto()
     {
         if (page == 3)

@@ -21,7 +21,7 @@ public class GenerateNpc : MonoBehaviour
     public Camera arCamera;
 
     private bool have = true;
-    int k = 0;
+    static int k = 0;
 
     float xc;
     float zc;
@@ -41,6 +41,7 @@ public class GenerateNpc : MonoBehaviour
         if (ArrangeManager.st != null && have == true)
         {
             SepString(ArrangeManager.st);
+            SetNpc();
             have = false;
         }
     }
@@ -48,14 +49,14 @@ public class GenerateNpc : MonoBehaviour
     // 튜토 에서만 사용
     public void SetOnlyNpc()
     {
-        transform.position = Spaces.spaces[CurrentState.currentPlaceCode].Currentlocation;
+        //transform.position = Spaces.spaces[CurrentState.currentPlaceCode].Currentlocation;
         setSpaces(0);
         Instantiate(modelCodes1, new Vector3(xc, yCoordi[0], zc), arCamera.transform.rotation); //npc 생성
     }
 
     public void SetObejct()
     {
-        transform.position = Spaces.spaces[CurrentState.currentPlaceCode].Currentlocation;
+        //transform.position = Spaces.spaces[CurrentState.currentPlaceCode].Currentlocation;
         setSpaces(1);
         Instantiate(modelCodes2, new Vector3(xc, yCoordi[1], zc), arCamera.transform.rotation); //먼저 포션 아이템만 배치
     }
@@ -82,15 +83,30 @@ public class GenerateNpc : MonoBehaviour
             }
             Debug.Log("finalCoordi = " + xc + "," + yCoordi[p] + "," + zc);
 
+            //arCamera.transform.position = new Vector3(Spaces.spaces[CurrentState.currentPlaceCode].latitude, Spaces.spaces[CurrentState.currentPlaceCode].longitude, Spaces.spaces[CurrentState.currentPlaceCode].altitude);
+            StartCoroutine(GpsManager.Gps_manager());
+            StartCoroutine(GpsManager.Gps_direction());
+
+            Vector3 diff;
+            float dir;
+
+            (diff, dir) = GpsManager.Gps_compare(GpsManager.latitude, GpsManager.longitude, GpsManager.altitude, GpsManager.magneticHeading);
+            Debug.Log("위치의 차이 = " + diff + "/방향의 차이 = " + dir);
+
             if (modelCodes[p] == 1)
             {
                 Vector3 cor = new Vector3(xc, yCoordi[p], zc);
+                Debug.Log("원래 좌표 좌표 = " + cor);
+                cor = cor + diff; // 현재 오브젝트 위치에서 이전과의 차이를 더해 이전 위치에 오브젝트 배치
+                Debug.Log("배치되는 좌표 = " + cor);
                 Instantiate(modelCodes1, cor, arCamera.transform.rotation);
             }
 
             else
             {
                 Vector3 cor = new Vector3(xc, yCoordi[p], zc);
+                cor = cor + diff;
+                Debug.Log("배치되는 좌표 = " + cor);
                 Instantiate(modelCodes2, cor, arCamera.transform.rotation);
             }
 
@@ -156,6 +172,51 @@ public class GenerateNpc : MonoBehaviour
             corr = null;
             index = null;
             t = null;   //혹시 모르니 계속해서 좌표 배열을 받는 변수 t를 초기화해준다.
+            k++;
+
+        }
+    }
+
+    public static void SepStringStart(string st)
+    {
+
+        string[] splitStr = { "[", "]" };
+        string[] str = st.Split(splitStr, StringSplitOptions.RemoveEmptyEntries); // [ 를 기준으로 덩어리를 나눈다.
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            Debug.Log("Split 이후 " + i + "번째 문장 = " + str[i]);
+        }
+        int k = 0; // Spaces.space_arr에 공간 번호 저장하기 위함
+
+        for (int j = 1; j < str.Length; j += 2) // 0번째는 더미이므로 1부터 시작
+        {
+            string corr = str[j];
+
+            string index = corr.Substring(0, 1);   // 맨 처음 숫자 저장
+            int placeCode = int.Parse(index); // 정수형변환
+            Debug.Log("PlaceCode = " + placeCode);
+
+            corr = corr.Substring(4, corr.Length - 5);  // 공간 이름 저장, 길이에서 5개를 뺀만큼
+            k = j / 2;
+            Spaces.spaces_arr[k] = k + 1; // 공간 등록 시 spaceSlot에 들어갈 위치를 파악하기 위함
+            Debug.Log("Spaces_arr = " + Spaces.spaces_arr[k]);
+
+            Debug.Log("SpaceName = " + corr);
+
+            //string[] t = corr.Split(',');   // x,y,z 값으로 나눈다.
+
+
+            Initialization space = new Initialization();
+            space.memberCode = 1;
+            space.placeCode = placeCode;
+            space.spaceName = corr;
+            Spaces.spaces.Add(space);
+
+            Debug.Log("저장 완료");
+            corr = null;
+            index = null;
+            //t = null;
             k++;
 
         }

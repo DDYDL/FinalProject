@@ -5,6 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.Assertions;
 using System;
+
 public class Distance : MonoBehaviour
 {
     //XRCpuImage cpuImage;
@@ -17,15 +18,21 @@ public class Distance : MonoBehaviour
     public void InputClick() => StartCoroutine(StartCoordi());
 
     public static Initialization space;
-
+    
     IEnumerator StartCoordi()
     {
+        StartCoroutine(GpsManager.Gps_manager());
+        StartCoroutine(GpsManager.Gps_direction());
 
         space = new Initialization(); // 각 공간마다 space정보 인스턴스 생성
 
         space.memberCode = 1;
         space.placeCode = Spaces.spaces.Count;
-        space.Currentlocation = camera.transform.position; // 공간을 등록한 현재 위치 저장
+        space.latitude = GpsManager.latitude;
+        space.longitude = GpsManager.longitude;
+        space.altitude = GpsManager.altitude;
+        space.direction = GpsManager.magneticHeading;
+        //space.Currentlocation = camera.transform.position; // 공간을 등록한 현재 위치 저장
         Spaces.spaces.Add(space);
 
         CurrentState.currentPlaceCode = space.placeCode;
@@ -79,7 +86,7 @@ public class Distance : MonoBehaviour
 
                     Vector3 direction = camera.transform.forward;
                     Vector3 coordi = camera.transform.position + direction.normalized * depthInMeters; // ���� ��ǥ�� ��ǥ
-                    //print($"�߾� �Ÿ� ���� : {coordi}");
+                    print($"�߾� �Ÿ� ���� : {coordi}");
                     //Vector3 coordi_w = transform.TransformDirection(coordi * Time.deltaTime); // ���� ��ǥ�� ��ǥ
                     //print($"�߾� �Ÿ� ���� : {coordi_w}"); // �ð�ȭ�� �� �� ����
 
@@ -90,6 +97,7 @@ public class Distance : MonoBehaviour
                     Vector3 direction1 = direction22.transform.forward; // ������ ������� ������ ����
                     Vector3 coordi1 = camera.transform.position + direction.normalized * depthInMeter;
                     //print($"���� ��� �Ÿ� : {coordi1}");
+
                     Instantiate(sphere, coordi, camera.transform.rotation); // �߾� ��ǥ �ð�ȭ
                     Instantiate(sphere1, coordi1, camera.transform.rotation); // ���� ��� ��ǥ �ð�ȭ
                     string coordis = coordi.x.ToString() + "," + (-coordi1.y).ToString() + "," + coordi.z.ToString(); // �ٴڿ� ���̱� ���� y=0 ����-�׷��� ���� ������ 0�� ��� ��ǥ��

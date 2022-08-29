@@ -9,8 +9,14 @@ public class TutorialController : MonoBehaviour
     public Animator npcAni;
     public GameObject particle;
     public GameObject click2;
+    public Slot slot;
 
     public bool isAttaking = false;
+
+    public void Start()
+    {
+        slot.IsTutorial = true;
+    }
 
     public void Step2() // Inventory 스크립트에서 slot(1)이 아이템을 얻으면 실행됨.
     {
@@ -31,5 +37,11 @@ public class TutorialController : MonoBehaviour
         Destroy(GetComponent<ghost>());
         Debug.Log("악령 퇴치 성공");
     }
+
+    public void ActiveClick2(bool tf)
+    {
+        click2.gameObject.SetActive(tf);
+    }
+
 
 }

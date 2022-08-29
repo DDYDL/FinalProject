@@ -46,6 +46,11 @@ public class BtnClickScene : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void OnClickTutoExitBtn()
+    {
+        SceneManager.LoadScene("PlayScene");
+    }
+
 
     // Update is called once per frame
     void Update()

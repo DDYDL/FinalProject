@@ -29,7 +29,7 @@ public class SpaceSlot : MonoBehaviour
         space = _space;
         itemImage.sprite = space.spaceImage;
         SetColor(1);
-        if(space != null)
+        if (space != null)
             Debug.Log("space 저장 완료");
         //space = _spacename;
         spaceNameText.text = PlayerPrefs.GetString("CurrentSpaceName");
@@ -47,7 +47,7 @@ public class SpaceSlot : MonoBehaviour
         space = _space;
         itemImage.sprite = space.spaceImage;
         SetColor(1);
-        spaceNameText.text = Spaces.slots[i].spaceNameText.text;
+        spaceNameText.text = Spaces.spaces[i].spaceName;
         Debug.Log("Set Space = " + spaceNameText.text);
     }
 }

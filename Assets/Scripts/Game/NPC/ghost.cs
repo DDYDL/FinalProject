@@ -6,42 +6,82 @@ using UnityEngine.UI;
 public class ghost : MonoBehaviour
 {
     public Animator ghostAnimator;
-    private Vector3 target;
-    public  Animator npcAni;
+    private GameObject target;
     public Text noticeText;
-    public  AudioSource audio;
-    public  AudioClip sound; //효과음
-
-    public  bool isAttack = false;
+    public AudioSource audio;
+    public AudioClip sound; //효과음
+    public PathFollowing path;
+    public bool isAttack = false;
 
     public static GameObject npc;
     public static ghost ghostNpc;
+    private float HealthPoint = 100.0f;
+    public  bool IsCollision = false;
+    public  bool canSeeTarget = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        npcAni = GetComponent<Animator>();
+        target = GameObject.FindGameObjectWithTag("MainCamera");
+        Debug.Log("target 네임 " + target);
         npc = gameObject;
         ghostNpc = this.GetComponent<ghost>();
-        Debug.Log("start 진입");
+        path = GetComponent<PathFollowing>();
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void CanSeeTarget()
     {
-        target = new Vector3(other.transform.position.x, transform.position.y, other.transform.position.z);
-        transform.LookAt(target);   //플레이어를 바라보도록 지시.
-        Debug.Log("트리거 진입");
-        //noticeText.text = "악령에게 아이템을 사용하세요";
-        Debug.Log("Npc와 조우"); //악령에게 아이템을 사용하라는 text가 나오도록 한다.
-        isAttack = true;
+        canSeeTarget = true;
     }
 
-    public  void ghostDead()
+    void Attacking(Collision collision)
+    {
+        ghostAnimator.SetBool("canAttack", true);
+        collision.gameObject.SendMessage("ApplyDamage");
+        Debug.Log("공격 함수 실행");
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsCollision = true;
+        if (collision.transform.tag == "MainCamera")
+        {
+            Attacking(collision);
+            Debug.Log("공격 진행");
+        }
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.tag == "MainCamera")
+        { 
+            ghostAnimator.SetBool("canAttack", false);
+            IsCollision = false;
+            canSeeTarget = false;
+            Debug.Log("공격 정지");
+        }
+    }
+
+    public void ChaseTarget()   // 타겟 추적 함수
+    {
+        if (IsCollision)
+        {
+            Debug.Log("추적 중단 / 충돌 발생");
+            return;
+        }
+        Quaternion targetRotation = Quaternion.LookRotation(target.transform.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 1.5f);
+        transform.Translate(Vector3.forward * Time.deltaTime * path.speed);
+        Debug.Log("타겟 추적중");
+    }
+
+    public void ghostDead()
     {
         Debug.Log("Dead 진입");
-        if (isAttack) 
-        { 
-            npcAni.SetBool("isAttacked", true);   //Npc가 죽는 애니메이션 등장.
+        if (isAttack)
+        {
+            ghostAnimator.SetBool("isAttacked", true);   //Npc가 죽는 애니메이션 등장.
             audio.clip = sound;
         }
     }

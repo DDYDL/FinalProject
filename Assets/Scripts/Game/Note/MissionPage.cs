@@ -14,13 +14,13 @@ public class MissionPage : MonoBehaviour
 
     void MissionData()
     {
-        missionPage.Add(1, "미션1 \r\n" +
+        missionPage.Add(0, "미션1 \r\n" +
             "미션1의 내용을 입력하세요.");
 
-        missionPage.Add(2, "미션2 \r\n" +
+        missionPage.Add(1, "미션2 \r\n" +
             "미션2의 내용을 입력하세요.");
 
-        missionPage.Add(3, "미션3 \r\n" +
+        missionPage.Add(2, "미션3 \r\n" +
             "미션3의 내용을 입력하세요.");
 
         Debug.Log("저장 완료");

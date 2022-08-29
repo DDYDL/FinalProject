@@ -6,4 +6,9 @@ public class ItemPickUp : MonoBehaviour
 {
     public Item item;
 
+    private void OnTriggerStay(Collider other)
+    {
+        ActionController.GetCollider(gameObject);
+    }
+
 }

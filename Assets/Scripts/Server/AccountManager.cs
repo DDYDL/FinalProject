@@ -13,22 +13,20 @@ public class AccountManager : MonoBehaviour
     /// Distance���� ���� ��ǥ�� ������ ������.
 
     [SerializeField] string url; // ������ ��������Ʈ�� ����
-    string json;
-    int i = 0;
+    static string json;
+    static int i = 0;
 
     public void InputClick() => StartCoroutine(AccountCo(json)); // ��ư ������ �ڷ�ƾ ����
 
-    void Update() // ��� finish ������ üũ�ϰ� �־�� �ϹǷ� update �Լ� ���
+    public static void SetCoordi()
     {
         if (Distance.finish == true && i == 0)
         {
-            //Spaces.spaces.Add(Distance.space);
-
             json = RandomCoordi.RanCoordi(); // Distance���� ��ǥ ������ ����Ǿ�߸� �Լ� ȣ��
             i++; //�� ���� ����Ǳ� ���� ����
-
             Distance.coordi_arr.coordi = null;
             Distance.finish = false;
+            Debug.Log("i = " + i);
         }
     }
 
@@ -41,10 +39,12 @@ public class AccountManager : MonoBehaviour
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("coordi", "application/json");
 
-            yield return request.SendWebRequest();
-
             Debug.Log(request.downloadHandler.text);
             i = 0;
+            Debug.Log("i2 = " + i);
+
+            yield return request.SendWebRequest();
+            //SpaceController.nameSign = false;
         }
         StopCoroutine(AccountCo(json));
     }

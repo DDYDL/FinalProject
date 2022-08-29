@@ -21,6 +21,8 @@ public class ArrangeManager : MonoBehaviour
     public static string st;
     public void InputClick() => StartCoroutine(BackCo(json));
 
+    public static bool initSign;
+
     void Start()
     {
         Command cd = new Command();
@@ -29,6 +31,23 @@ public class ArrangeManager : MonoBehaviour
         Debug.Log("code = " + cd.code);
         json = JsonUtility.ToJson(cd);
     }
+
+    private void Update()
+    {
+        if (initSign == true)
+        {
+            Command cd = new Command();
+            cd.command = "init";
+            cd.code = 1.ToString() + "&" + CurrentState.currentPlaceCode; // MemberCode only need
+            json = JsonUtility.ToJson(cd);
+
+            StartCoroutine(BackCo(json));
+            GenerateNpc.SepStringStart(st);
+            Debug.Log("Init End");
+            initSign = false;
+        }
+    }
+
     IEnumerator BackCo(string json)
     {
         using (UnityWebRequest request = UnityWebRequest.Post(url, json))

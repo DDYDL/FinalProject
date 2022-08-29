@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InputName : MonoBehaviour
 {
     public InputField spaceNameInput;
-    private string spaceName = null;
+    public static string spaceName = null;
 
     private void Awake()
     {
@@ -15,7 +15,7 @@ public class InputName : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -31,5 +31,6 @@ public class InputName : MonoBehaviour
     {
         spaceName = spaceNameInput.text;
         PlayerPrefs.SetString("CurrentSpaceName", spaceName);
+        AccountManager.SetCoordi();
     }
 }
